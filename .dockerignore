@@ -1,0 +1,7 @@
+# Ignore files that are not needed for the build
+node_modules/
+bruno/
+.gitignore
+README.md
+.idea/
+*.iml

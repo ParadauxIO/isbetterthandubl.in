@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>is this place better than Dublin?</title>
+    <link rel="stylesheet" href="/stylesheet.css">
+</head>
+<body>
+<div class="container">
+    <form class="card" onsubmit="return handleSubmit(event)">
+        <h1>Is <input type="text" id="placeInput"/> better than dublin?</h1>
+        <p>Use our robust algorithms to determine if a place is better than dublin.</p>
+        <input type="submit" value="Submit"/>
+    </form>
+    <footer class="footer">
+        Please direct any questions, queries or concerns to
+        <a href="mailto:example@example.com">this</a>
+        email address.
+    </footer>
+</div>
+<script type="text/javascript">
+    const environment = "<%= environment %>";
+    function handleSubmit(e) {
+        e.preventDefault();
+        const place = document.getElementById('placeInput').value;
+        if (place) {
+            console.log('Redirecting to /' + place);
+            if (environment === "production") {
+                window.location.href = `https://${place}.isbetterthandubl.in`;
+            } else {
+                window.location.href = '/' + place;
+            }
+        }
+        return false;
+    }
+</script>
+</body>
+</html>
