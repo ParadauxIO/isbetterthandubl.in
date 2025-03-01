@@ -28,7 +28,7 @@
         if (place) {
             place = place.toLowerCase().replace(" ", "-");
 
-            if (place.startsWith("http")) {
+            if (place.startsWith("http") || place.endsWith("?")) {
                 alert("you think you're some kinda HAXOR?!")
                 return false;
             }
