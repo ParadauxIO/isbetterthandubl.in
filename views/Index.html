@@ -24,11 +24,27 @@
     const environment = "<%= environment %>";
     function handleSubmit(e) {
         e.preventDefault();
-        const place = document.getElementById('placeInput').value;
+        let place = document.getElementById('placeInput').value
         if (place) {
+            place = place.toLowerCase().replace(" ", "-");
+
+            if (place.startsWith("http")) {
+                alert("you think you're some kinda HAXOR?!")
+                return false;
+            }
+
+            switch (place) {
+                case "dublin":
+                    alert("x > x doesn't make any FUCKING sense.");
+                    return false;
+                case "nothing":
+                    alert("you think you're FUNNY?")
+                    return false;
+            }
+
             console.log('Redirecting to /' + place);
             if (environment === "production") {
-                window.location.href = `https://${place}.isbetterthandubl.in`;
+                window.location.href = `https://${place.replace(" ", "-")}.isbetterthandubl.in`;
             } else {
                 window.location.href = '/' + place;
             }
