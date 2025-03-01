@@ -28,11 +28,11 @@ a {
 }
 
 input[type="text"] {
-    height: 1em;  /* Match the height of the surrounding text */
-    font-size: inherit;  /* Use the same font size as the h1 */
-    vertical-align: baseline;  /* Align with the text baseline */
-    margin: 0;  /* Remove any default margins */
-    padding: 0 0.05rem;  /* Add a bit of horizontal padding for text */
+    height: 1em;
+    font-size: inherit;
+    vertical-align: baseline;
+    margin: 0;
+    padding: 0 0.05rem;
 }
 
 input[type="submit"] {
