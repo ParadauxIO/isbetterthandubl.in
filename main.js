@@ -12,13 +12,13 @@ const environment = process.env.NODE_ENV;
 
 const app = express();
 
-// Sets the rendering engine and path to views.
+app.set('trust proxy', process.env.TRUST_PROXY === 'true');
+
 app.engine(".html", ejs.__express);
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
 app.set("view engine", "html");
 
-// Create logs directory if it doesn't exist
 const logsDir = path.join(__dirname, "logs");
 if (!fs.existsSync(logsDir)) {
     fs.mkdirSync(logsDir, { recursive: true });
@@ -30,8 +30,14 @@ app.use((req, res, next) => {
     const today = format(new Date(), "yyyy-MM-dd");
     const logFilePath = path.join(logsDir, `${today}.log`);
 
-    // Get the client IP address
-    const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+    let ip = req.headers['x-forwarded-for'] ||
+        req.headers['x-real-ip'] ||
+        req.socket.remoteAddress;
+
+    // If X-Forwarded-For contains multiple IPs, get the first one (client's IP)
+    if (ip && ip.includes(',')) {
+        ip = ip.split(',')[0].trim();
+    }
 
     // Get the user agent
     const userAgent = req.headers['user-agent'] || 'Unknown';
