@@ -26,7 +26,11 @@
         e.preventDefault();
         let place = document.getElementById('placeInput').value
         if (place) {
+            // Remove leading and trailing whitespace, convert to lowercase, replace spaces with hyphens
             place = place.toLowerCase().replace(" ", "-");
+            place = place.trim();
+            place = place.replace(/[^a-zA-Z0-9 _]/g, '');
+            place = place.replace(/[ _]/g, '-');
 
             if (place.startsWith("http") || place.endsWith("?")) {
                 alert("you think you're some kinda HAXOR?!")
@@ -39,6 +43,9 @@
                     return false;
                 case "nothing":
                     alert("you think you're FUNNY?")
+                    return false;
+                case "nowhere":
+                    alert("This isn't a place, you know?");
                     return false;
             }
 
