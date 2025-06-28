@@ -62,7 +62,7 @@ app.use((req, res, next) => {
             console.error("Error writing to log file:", err);
         }
     });
-
+    console.log(`[${timestamp}] ${ip} ${req.method} ${req.originalUrl} UA:${userAgent} Subdomain:${logData.subdomain}`);
     next();
 });
 
