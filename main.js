@@ -7,6 +7,7 @@ import fs from "fs";
 import { format } from "date-fns";
 import {logMiddleware} from "./middleware/log.js";
 import {createVisit} from "./middleware/visit.js";
+import {metricsMiddleware, metricsHandler} from "./middleware/metrics.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -25,6 +26,11 @@ const logsDir = path.join(__dirname, "logs");
 if (!fs.existsSync(logsDir)) {
     fs.mkdirSync(logsDir, { recursive: true });
 }
+
+// Prometheus metrics — registered before logging/visit and the "*" catch-all so
+// scrapes aren't logged and /metrics isn't swallowed by the wildcard route.
+app.use(metricsMiddleware);
+app.get("/metrics", metricsHandler);
 
 // Logging middleware
 app.use(logMiddleware(logsDir));
