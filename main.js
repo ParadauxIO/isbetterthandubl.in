@@ -6,7 +6,6 @@ import ejs from "ejs";
 import fs from "fs";
 import { format } from "date-fns";
 import {logMiddleware} from "./middleware/log.js";
-import {createVisit} from "./middleware/visit.js";
 import {metricsMiddleware, metricsHandler} from "./middleware/metrics.js";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -34,9 +33,6 @@ app.get("/metrics", metricsHandler);
 
 // Logging middleware
 app.use(logMiddleware(logsDir));
-
-// Increment the visitor count
-app.use(createVisit(process.env.PARADAUX_API_BASE_URL, process.env.PARADAUX_API_SECRET, "isbetterthandubl.in"));
 
 // Extracts subdomain and appends it to the request context.
 app.use((req, res, next) => {
